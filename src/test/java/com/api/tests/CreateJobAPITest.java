@@ -1,12 +1,15 @@
 package com.api.tests;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.startsWith;
 
-import static org.hamcrest.Matchers.*;
-
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.time.Instant;
 import org.testng.annotations.Test;
 
 import com.api.constant.Role;
@@ -15,19 +18,20 @@ import com.api.pojo.Customer;
 import com.api.pojo.CustomerAddress;
 import com.api.pojo.CustomerProduct;
 import com.api.pojo.Problems;
+import static com.api.utils.DateTimeUtil.*;
 import com.api.utils.SpecUtil;
-
-import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
 public class CreateJobAPITest {
 	
 	
 	@Test
 	public void createJobAPITest() {
+		System.out.println(Instant.now().minus(10,ChronoUnit.DAYS));
+		System.out.println("######################");
 		Customer customer = new Customer("Abhi", "Bhagat", "7676767786", "", "abhi@gmail.com", "");
 		
 		CustomerAddress customerAddress = new CustomerAddress("A 12", "Abg c", "stghj t", "erhj t", "rtghj ee", "411056", "india", "maharashtra");
-		CustomerProduct customerProduct = new CustomerProduct("2025-04-06T18:30:00.000Z", "89904753563802", "89904753563802", "89904753563802", "2025-04-06T18:30:00.000Z", 1, 1);
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "59904753563802", "59904753563802", "59904753563802", getTimeWithDaysAgo(10), 1, 1);
 		Problems problems = new Problems(1, "battery issue");
 		
 		List<Problems> problemList = new ArrayList<>();
