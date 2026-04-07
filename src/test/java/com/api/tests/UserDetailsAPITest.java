@@ -8,25 +8,25 @@ import java.io.IOException;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
-import com.api.utils.SpecUtil;
+import static com.api.utils.SpecUtil.*;
 
-import io.restassured.module.jsv.JsonSchemaValidator;
+import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
 public class UserDetailsAPITest {
 
-	@Test
+	@Test(description = "verify if the Userdetails API response is shown correctly",groups= {"api","smoke","regression"})
 	public void userDetailsAPITest() throws IOException {
 		
 		
 	
 		given()
-		.spec(SpecUtil.requestSpecWithAuth(FD))
+		.spec(requestSpecWithAuth(FD))
 		.when()
 		.get("userdetails")
 		.then()
-		.spec(SpecUtil.responseSpec_OK())
+		.spec(responseSpec_OK())
 		.and()
-		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("response-schema/UserDetailsResponseSchema.json"));
+		.body(matchesJsonSchemaInClasspath("response-schema/UserDetailsResponseSchema.json"));
 		
 		
 		
