@@ -49,9 +49,6 @@ public class CreateJobAPITest {
 	
 	@Test(description = "Verifying if create api is giving correct response ",groups={"api","regression","smoke"})
 	public void createJobAPITest() {
-		
-		
-		
 		given()
 		.spec(requestSpecWithAuth(Role.FD,createJobPayload))
 		.when()
