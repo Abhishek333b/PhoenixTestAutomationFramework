@@ -1,5 +1,4 @@
 package com.api.tests;
-
 import static com.api.utils.DateTimeUtil.getTimeWithDaysAgo;
 import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
@@ -23,10 +22,10 @@ import com.api.constant.Role;
 import com.api.constant.Service_Location;
 import com.api.constant.Warrenty_Status;
 import com.api.pojo.CreateJobPayload;
-import com.api.pojo.Customer;
-import com.api.pojo.CustomerAddress;
-import com.api.pojo.CustomerProduct;
 import com.api.pojo.Problems;
+import com.api.pojo.request.model.Customer;
+import com.api.pojo.request.model.CustomerAddress;
+import com.api.pojo.request.model.CustomerProduct;
 
 public class CreateJobAPITest {
  private	CreateJobPayload createJobPayload;
