@@ -46,11 +46,10 @@ public class FakerDemo2 {
 		String popUrl = faker.internet().url();
 		CustomerProduct customerProduct = new CustomerProduct(dop, imeiSerialNumber, imeiSerialNumber, imeiSerialNumber, popUrl , 1, 1);
 		System.out.println(customerProduct);
+		String fakeRemark =faker.lorem().sentence(5);
 		
-		
-		String fakeRemark =faker.lorem().sentence(10);
 		Random random = new Random();
-		int problemId=random.nextInt(26)+1;
+		int problemId=random.nextInt(27)+1;
 		
 		Problems problems = new Problems(problemId, fakeRemark);
 		System.out.println(problems);

@@ -6,9 +6,10 @@ import java.util.List;
 
 import org.testng.annotations.DataProvider;
 
-import com.api.pojo.CreateJobPayload;
+import com.api.pojo.request.model.CreateJobPayload;
 import com.api.utils.CSVReaderUtil;
 import com.api.utils.CreateJobBeanMapper;
+import com.api.utils.FakerDataGenerator;
 import com.dataproviders.api.bean.CreateJobBean;
 import com.dataproviders.api.bean.UserBean;
 
@@ -24,19 +25,24 @@ public class DataProviderUtils {
 	public static Iterator<CreateJobPayload> createJobDataProvider() {
 		Iterator<CreateJobBean> creatJobBeanIterator = CSVReaderUtil.loadCSV("testData/CreateJobData.csv",
 				CreateJobBean.class);
-		
+
 		List<CreateJobPayload> payloaList = new ArrayList<CreateJobPayload>();
 		CreateJobBean tempBean;
 		CreateJobPayload tempPayload;
-		while(creatJobBeanIterator.hasNext()) {
-			tempBean= creatJobBeanIterator.next();
-		 tempPayload=CreateJobBeanMapper.mapper(tempBean);
-		 payloaList.add(tempPayload);
+		while (creatJobBeanIterator.hasNext()) {
+			tempBean = creatJobBeanIterator.next();
+			tempPayload = CreateJobBeanMapper.mapper(tempBean);
+			payloaList.add(tempPayload);
 		}
-		
+
 		return payloaList.iterator();
-		
-		
+
+	}
+
+	@DataProvider(name = "CreateJobAPIFakerDataProvider", parallel = true)
+	public static Iterator<CreateJobPayload> createJobFakeDataProvider() {
+	Iterator<CreateJobPayload> payloadIterator=	FakerDataGenerator.generateFakeCreateJobData(10);
+	return payloadIterator;
 	}
 
 }
