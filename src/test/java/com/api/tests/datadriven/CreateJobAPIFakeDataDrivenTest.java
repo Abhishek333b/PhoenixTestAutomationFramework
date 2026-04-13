@@ -10,13 +10,14 @@ import static org.hamcrest.Matchers.startsWith;
 import org.testng.annotations.Test;
 
 import com.api.constant.Role;
-import com.api.pojo.CreateJobPayload;
+//import com.api.pojo.CreateJobPayload;
+import com.api.pojo.request.model.CreateJobPayload;
 
-public class CreateJobAPIDataDrivenTest {
+public class CreateJobAPIFakeDataDrivenTest {
  
-@Test(description = "Verifying if create api is giving correct response ",groups={"api","regression","datadriven","csv"},
+@Test(description = "Verifying if create api is giving correct response ",groups={"api","regression","datadriven","faker"},
 			dataProviderClass = com.dataproviders.DataProviderUtils.class,
-			dataProvider = "CreateJobDataProvider"
+			dataProvider = "CreateJobAPIFakerDataProvider"
 			)
 	public void createJobAPITest(CreateJobPayload createJobPayload) {
 		given()

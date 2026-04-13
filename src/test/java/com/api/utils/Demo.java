@@ -3,8 +3,9 @@ package com.api.utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.api.pojo.CreateJobPayload;
+//import com.api.pojo.CreateJobPayload;
 import com.dataproviders.api.bean.CreateJobBean;
+import com.api.pojo.request.model.CreateJobPayload;
 
 public class Demo {
 

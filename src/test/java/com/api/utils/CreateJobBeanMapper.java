@@ -3,12 +3,14 @@ package com.api.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.api.pojo.CreateJobPayload;
-import com.api.pojo.Problems;
+//import com.api.pojo.CreateJobPayload;
+//import com.api.pojo.Problems;
 import com.api.pojo.request.model.Customer;
 import com.api.pojo.request.model.CustomerAddress;
 import com.api.pojo.request.model.CustomerProduct;
 import com.dataproviders.api.bean.CreateJobBean;
+import com.api.pojo.request.model.CreateJobPayload;
+import com.api.pojo.request.model.Problems;
 
 public class CreateJobBeanMapper {
 
