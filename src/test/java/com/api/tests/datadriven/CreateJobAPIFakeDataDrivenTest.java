@@ -15,7 +15,7 @@ import com.api.pojo.request.model.CreateJobPayload;
 
 public class CreateJobAPIFakeDataDrivenTest {
  
-@Test(description = "Verifying if create api is giving correct response ",groups={"api","regression","datadriven"},
+@Test(description = "Verifying if create api is giving correct response ",groups={"api","regression","datadriven","faker"},
 			dataProviderClass = com.dataproviders.DataProviderUtils.class,
 			dataProvider = "CreateJobAPIFakerDataProvider"
 			)
