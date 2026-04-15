@@ -10,6 +10,7 @@ import com.api.pojo.request.model.CreateJobPayload;
 import com.api.pojo.request.model.UserCredentials;
 import com.api.utils.CSVReaderUtil;
 import com.api.utils.CreateJobBeanMapper;
+import com.api.utils.ExcelReaderUtil2;
 import com.api.utils.FakerDataGenerator;
 import com.api.utils.JsonReaderUtil;
 import com.dataproviders.api.bean.CreateJobBean;
@@ -62,7 +63,12 @@ public class DataProviderUtils {
 		return JsonReaderUtil.loadJSON("testData/CreateJobAPIData.json", CreateJobPayload[].class);
 	}
 	
-	
+	@DataProvider(name = "LoginAPIExcelDataProvider", parallel = true)
+
+	public static Iterator<UserCredentials>LoginAPIExcelDataProvider() {
+		return ExcelReaderUtil2.loadTestData();
+	}
+
 	
 
 }
