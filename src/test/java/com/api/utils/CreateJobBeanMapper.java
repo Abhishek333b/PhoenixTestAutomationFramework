@@ -17,7 +17,12 @@ public class CreateJobBeanMapper {
 private CreateJobBeanMapper() {
 	
 }	
+
+private static String safeString(String value) {
+    return value != null ? value : "";
+}
 	public static CreateJobPayload mapper(CreateJobBean bean) {
+		
 		
 		int mstServiceLocationId=Integer.parseInt(bean.getMst_service_location_id());
 		int mstPlatformId=Integer.parseInt(bean.getMst_platform_id());
@@ -27,7 +32,8 @@ private CreateJobBeanMapper() {
 		Customer customer = new Customer(bean.getCustomer__first_name(),
 				bean.getCustomer__last_name(),
 				bean.getCustomer__mobile_number(),
-				bean.getCustomer__mobile_number_alt(), 
+//				bean.getCustomer__mobile_number_alt(), 
+				safeString(bean.getCustomer__mobile_number_alt()),
 				bean.getCustomer__email_id(), 
 				bean.getCustomer__email_id_alt());
 		
@@ -66,6 +72,8 @@ private CreateJobBeanMapper() {
 				 problemList);
 		
 		return payload;
+		
+		
 		
 	}
 
