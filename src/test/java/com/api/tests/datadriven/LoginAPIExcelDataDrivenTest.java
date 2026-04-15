@@ -15,9 +15,9 @@ public class LoginAPIExcelDataDrivenTest {
 
 	@Test(description = "Verifying if login api is working for FD user", groups = { "api", "regression",
 			"datadriven" }, dataProviderClass = com.dataproviders.DataProviderUtils.class, dataProvider = "LoginAPIExcelDataProvider")
-	public void loginAPITest(UserCredentials userCredentials) {
+	public void loginAPITest(UserBean userBean) {
 
-		given().spec(requestSpec(userCredentials)).when().post("login").then().spec(responseSpec_OK())
+		given().spec(requestSpec(userBean)).when().post("login").then().spec(responseSpec_OK())
 				.body("message", equalTo("Success")).and()
 				.body(matchesJsonSchemaInClasspath("response-schema/LoginResponSeschema.json"));
 
