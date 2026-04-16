@@ -2,40 +2,41 @@ package com.api.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExcelReaderUtil {
+import com.api.pojo.request.model.UserCredentials;
+import com.dataproviders.api.bean.UserBean;
+import com.poiji.bind.Poiji;
 
-	public static void main(String[] args) throws IOException {
+import org.apache.poi.ss.usermodel.Cell;
+//import com.google.common.collect.Table.Cell;
+
+public class ExcelReaderUtil {
+	private ExcelReaderUtil() {
+
+	}
+
+	public static <T> Iterator<T> loadTestData(String sheetName,Class<T> clazz)  {
 		InputStream is = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream("testData/PhoenixTestData.xlsx");
-		XSSFWorkbook myWorkBook = new XSSFWorkbook(is);
-
-		XSSFSheet mysheet = myWorkBook.getSheet("LoginTestData");
-		XSSFRow myRow;
-		XSSFCell myCell;
-
-		int lastRowIndex = mysheet.getLastRowNum();
-		System.out.println(lastRowIndex);
-
-		XSSFRow rowHeader = mysheet.getRow(0);
-		int lastIndexCol = rowHeader.getLastCellNum() - 1;
-		System.out.println(lastIndexCol);
-
-		for (int rowIndex = 0; rowIndex <= lastRowIndex; rowIndex++) {
-			for (int colIndex = 0; colIndex <= lastIndexCol; colIndex++) {
-				myRow = mysheet.getRow(rowIndex);
-				myCell = myRow.getCell(colIndex);
-				System.out.print(myCell+" ");
-			}
-			System.out.println();
-
+		XSSFWorkbook myWorkBook = null;
+		try {
+			myWorkBook = new XSSFWorkbook(is);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
+		XSSFSheet mysheet = myWorkBook.getSheet(sheetName);//"LoginTestData"
+		List<T>datalist	=Poiji.fromExcel(mysheet, clazz);
+		return datalist.iterator();
 	}
 
 }
