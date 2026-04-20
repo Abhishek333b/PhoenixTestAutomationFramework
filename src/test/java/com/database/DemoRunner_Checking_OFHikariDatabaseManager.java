@@ -6,8 +6,8 @@ import java.sql.SQLException;
 public class DemoRunner_Checking_OFHikariDatabaseManager {
 	public static void main(String[] args) throws SQLException {
 		DatabaseManager.getConnection();
-	Connection conn=DatabaseManager.getConnection();
-	System.out.println(conn);
+		Connection conn = DatabaseManager.getConnection();
+		System.out.println(conn);
 	}
 
 }
