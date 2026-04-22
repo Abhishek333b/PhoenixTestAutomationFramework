@@ -15,14 +15,14 @@ public class DemoDaoRunner {
 
 	public static void main(String[] args) throws SQLException {
 
-	CustomerProductDBModel customerProductDBModel=	CustomerProductDao.getProductInfoFromDB(259414);
-	System.out.println(customerProductDBModel);
-	
-CustomerProduct	customerProduct	 = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563111",
-			"18504753563111", "18504753563111", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
-			Model.NEXUS_2_BLUE.getCode());
+		CustomerProductDBModel customerProductDBModel = CustomerProductDao.getProductInfoFromDB(259414);
+		System.out.println(customerProductDBModel);
 
-System.out.println(customerProduct);
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563111",
+				"18504753563111", "18504753563111", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
+				Model.NEXUS_2_BLUE.getCode());
+
+		System.out.println(customerProduct);
 	}
 
 }
