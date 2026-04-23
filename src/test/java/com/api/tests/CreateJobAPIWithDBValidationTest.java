@@ -32,10 +32,12 @@ import com.api.pojo.request.model.CustomerProduct;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
+import com.database.dao.JobHeadDao;
 import com.database.dao.MapJobProblemDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
+import com.database.model.JobHeadModel;
 import com.database.model.MapJobProblemModel;
 
 import io.restassured.response.Response;
@@ -51,8 +53,8 @@ public class CreateJobAPIWithDBValidationTest {
 
 		customerAddress = new CustomerAddress("A 12", "Abg c", "stghj t", "erhj t", "rtghj ee", "411056", "india",
 				"maharashtra");
-		customerProduct	 = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563444",
-				"18504753563444", "18504753563444", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
+		customerProduct	 = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563555",
+				"18504753563555", "18504753563555", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
 				Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "battery issue");
 
@@ -123,8 +125,11 @@ public class CreateJobAPIWithDBValidationTest {
 		Assert.assertEquals(customerProductDBData.getPopurl(),customerProduct.popurl());
 		Assert.assertEquals(customerProductDBData.getMst_model_id(),customerProduct.mst_model_id());
 	
-		
-		
+		JobHeadModel jobHeadDataFromDB= JobHeadDao.getDataFromJobHead(customerId);
+		Assert.assertEquals(jobHeadDataFromDB.getMst_oem_id(),createJobPayload.mst_oem_id());
+		Assert.assertEquals(jobHeadDataFromDB.getMst_service_location_id(),createJobPayload.mst_service_location_id());
+		Assert.assertEquals(jobHeadDataFromDB.getMst_warrenty_status_id(),createJobPayload.mst_warrenty_status_id());
+		Assert.assertEquals(jobHeadDataFromDB.getMst_platform_id(),createJobPayload.mst_platform_id());
 	}
 
 }
