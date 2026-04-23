@@ -32,9 +32,11 @@ import com.api.pojo.request.model.CustomerProduct;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
+import com.database.dao.MapJobProblemDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
+import com.database.model.MapJobProblemModel;
 
 import io.restassured.response.Response;
 
@@ -49,8 +51,8 @@ public class CreateJobAPIWithDBValidationTest {
 
 		customerAddress = new CustomerAddress("A 12", "Abg c", "stghj t", "erhj t", "rtghj ee", "411056", "india",
 				"maharashtra");
-		customerProduct	 = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563111",
-				"18504753563111", "18504753563111", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
+		customerProduct	 = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563444",
+				"18504753563444", "18504753563444", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
 				Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "battery issue");
 
@@ -104,6 +106,13 @@ public class CreateJobAPIWithDBValidationTest {
 		Assert.assertEquals(customerAddressFromDB.getCountry(),customerAddress.country());
 		Assert.assertEquals(customerAddressFromDB.getPincode(),customerAddress.pincode());
 	
+		int	tr_job_head_id=	response.then().extract().body().jsonPath().getInt("data.id");
+		MapJobProblemModel jobDataFromDB = MapJobProblemDao.getProblemDetails(tr_job_head_id);
+		Assert.assertEquals(jobDataFromDB.getMst_problem_id(),createJobPayload.problems().get(0).id());
+		Assert.assertEquals(jobDataFromDB.getRemark(),createJobPayload.problems().get(0).remark());
+		
+		
+
 		int productId = response.then().extract().body().jsonPath().getInt("data.tr_customer_product_id");
 		
 		CustomerProductDBModel customerProductDBData=	CustomerProductDao.getProductInfoFromDB(productId);
@@ -113,6 +122,9 @@ public class CreateJobAPIWithDBValidationTest {
 		Assert.assertEquals(customerProductDBData.getDop(),customerProduct.dop());
 		Assert.assertEquals(customerProductDBData.getPopurl(),customerProduct.popurl());
 		Assert.assertEquals(customerProductDBData.getMst_model_id(),customerProduct.mst_model_id());
+	
+		
+		
 	}
 
 }
