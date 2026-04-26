@@ -6,7 +6,9 @@ public class EnvRunner {
 	public static void main(String[] args) {
 
 		Dotenv dotenv = Dotenv.load();
-		String data = dotenv.get("DB_URL");
+//		String data = dotenv.get("DB_URL");
+		String data=dotenv.get("DB_PASSWORD");
+//		System.out.println(data);
 		System.out.println(data);
 	}
 
