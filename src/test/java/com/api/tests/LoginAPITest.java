@@ -29,7 +29,7 @@ public class LoginAPITest {
 	@Test(description = "Verifying if login api is working for FD user", groups ={"api", "regression","smoke"}  )
 	public void loginAPITest() throws IOException {
 
-		authService.ligin(userCredentials)
+		authService.login(userCredentials)
 		.then().spec(responseSpec_OK())
 		.body("message", equalTo("Success"))
 		.and()
