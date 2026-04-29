@@ -22,22 +22,26 @@ import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.JobHeadModel;
 import com.api.pojo.request.model.Customer;
+import com.api.services.JobService;
 
 public class CreateJobAPITestwithFakeData {
 	private CreateJobPayload createJobPayload;
 	private final static String COUNTRY = "India";
+	private JobService jobService;	
 
-	@BeforeMethod(description = "creating createjob api request payload")
+	@BeforeMethod(description = "creating createjob api request payload and instantiating the jobService")
 	public void setup() {
 
 		createJobPayload = FakerDataGenerator.generateFakeCreateJobData();
+		jobService = new JobService();
 
 	}
 
 	@Test(description = "Verifying if create api is giving correct response ", groups = { "api", "regression",
 			"smoke" })
 	public void createJobAPITest() {
-		int customerId = given().spec(requestSpecWithAuth(Role.FD, createJobPayload)).when().post("/job/create").then()
+		int customerId = jobService.createJob(Role.FD, createJobPayload)
+				.then()
 				.spec(responseSpec_OK())
 				.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
 				.body("message", equalTo("Job created successfully. ")).body("data.mst_service_location_id", equalTo(1))

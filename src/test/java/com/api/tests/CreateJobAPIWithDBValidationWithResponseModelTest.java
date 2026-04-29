@@ -20,16 +20,21 @@ import com.api.constant.Model;
 import com.api.constant.OEM;
 import com.api.constant.Platform;
 import com.api.constant.Problem;
+//import com.api.constant.Problem;
+import com.api.pojo.request.model.Problems;
 import com.api.constant.Product;
 import com.api.constant.Role;
 import com.api.constant.Service_Location;
 import com.api.constant.Warrenty_Status;
-import com.api.pojo.CreateJobPayload;
-import com.api.pojo.Problems;
+//import com.api.pojo.CreateJobPayload;
+import com.api.pojo.request.model.CreateJobPayload;
+//import com.api.pojo.Problems;
+import com.api.pojo.request.model.Problems;
 import com.api.pojo.request.model.Customer;
 import com.api.pojo.request.model.CustomerAddress;
 import com.api.pojo.request.model.CustomerProduct;
 import com.api.response.model.CreateJobResponseModel;
+import com.api.services.JobService;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
@@ -48,8 +53,9 @@ public class CreateJobAPIWithDBValidationWithResponseModelTest {
 	private Customer customer;
 	private CustomerAddress customerAddress;
 	private CustomerProduct customerProduct;
+	private JobService jobservice;
 
-	@BeforeMethod(description = "creating createjob api request payload")
+	@BeforeMethod(description = "creating createjob api request payload and instantiating the job service")
 	public void setup() {
 		customer = new Customer("Abhi", "Bhagat", "7676767786", "", "abhi@gmail.com", "");
 
@@ -65,13 +71,14 @@ public class CreateJobAPIWithDBValidationWithResponseModelTest {
 				Platform.FRONT_DESK.getCode(), Warrenty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer,
 				customerAddress, customerProduct, problemList);
 
+		jobservice = new JobService();
 	}
 
 	@Test(description = "Verifying if create api is giving correct response ", groups = { "api", "regression",
 			"smoke" })
 	public void createJobAPITest() throws SQLException {
-		CreateJobResponseModel createJobResponseModel = given().spec(requestSpecWithAuth(Role.FD, createJobPayload))
-				.when().post("/job/create").then().spec(responseSpec_OK())
+		CreateJobResponseModel createJobResponseModel = jobservice.createJob(Role.FD,createJobPayload) 
+				.then().spec(responseSpec_OK())
 				.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
 				.body("message", equalTo("Job created successfully. ")).body("data.mst_service_location_id", equalTo(1))
 				.body("data.job_number", startsWith("JOB_"))
