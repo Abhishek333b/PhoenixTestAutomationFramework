@@ -8,7 +8,10 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.notNullValue;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.api.services.MasterService;
 
 import static com.api.utils.SpecUtil.*;
 
@@ -16,12 +19,17 @@ import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
 public class MasterAPITest {
 
+	private MasterService masterService;
+	
+	@BeforeMethod(description = "Instantiating the Master Service Object")
+	public void setup() {
+		masterService = new MasterService();
+	}
+	
 	@Test(description = "Verifying if Master api is giving correct response ",groups={"api","regression","smoke"})
 	public void masterAPITest() {
-		given()
-		.spec(requestSpecWithAuth(FD))
-		.when()
-		.post("master")
+		
+		masterService.master(FD)
 		.then()
 		.spec(responseSpec_OK())
 		

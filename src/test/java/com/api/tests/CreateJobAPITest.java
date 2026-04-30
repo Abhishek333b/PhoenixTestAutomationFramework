@@ -1,8 +1,6 @@
 package com.api.tests;
 import static com.api.utils.DateTimeUtil.getTimeWithDaysAgo;
-import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
@@ -21,37 +19,42 @@ import com.api.constant.Product;
 import com.api.constant.Role;
 import com.api.constant.Service_Location;
 import com.api.constant.Warrenty_Status;
-import com.api.pojo.CreateJobPayload;
-import com.api.pojo.Problems;
+//import com.api.pojo.CreateJobPayload;
+import com.api.pojo.request.model.CreateJobPayload;
 import com.api.pojo.request.model.Customer;
 import com.api.pojo.request.model.CustomerAddress;
 import com.api.pojo.request.model.CustomerProduct;
+//import com.api.pojo.Problems;
+import com.api.pojo.request.model.Problems;
+import com.api.services.JobService;
+
+
+
 
 public class CreateJobAPITest {
- private	CreateJobPayload createJobPayload;
 	
- @BeforeMethod(description = "creating createjob api request payload")
+private JobService jobService;	
+ private CreateJobPayload createJobPayload;
+	
+ @BeforeMethod(description = "creating createjob api request payload and instantiating the job service")
  public void setup() {
          Customer customer = new Customer("Abhi", "Bhagat", "7676767786", "", "abhi@gmail.com", "");
 		
 		CustomerAddress customerAddress = new CustomerAddress("A 12", "Abg c", "stghj t", "erhj t", "rtghj ee", "411056", "india", "maharashtra");
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "29904753563802", "29904753563802", "29904753563802", getTimeWithDaysAgo(10), 
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "29904753563333", "29904753563333", "29904753563333", getTimeWithDaysAgo(10), 
 			Product.NEXUS_2.getCode(),Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "battery issue");
 		
 		List<Problems> problemList = new ArrayList<>();
 		problemList.add(problems);
 		 createJobPayload = new CreateJobPayload(Service_Location.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warrenty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(),customer, customerAddress, customerProduct, problemList);
-		
+		 jobService = new JobService();
 		
 	}
 	
 	@Test(description = "Verifying if create api is giving correct response ",groups={"api","regression","smoke"})
 	public void createJobAPITest() {
-		given()
-		.spec(requestSpecWithAuth(Role.FD,createJobPayload))
-		.when()
-		.post("/job/create")
+		jobService.createJob(Role.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))

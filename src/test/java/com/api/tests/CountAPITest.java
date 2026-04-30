@@ -15,16 +15,26 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.api.services.DashBoardService;
+import com.api.services.UserService;
+
 public class CountAPITest {
+	
+	private DashBoardService dashBoardService;
+	@BeforeMethod(description = "Setting up the dashBoardService instance")
+	public void setup() {
+		dashBoardService = new DashBoardService();
+	}
+	
+	
+	
 
 	@Test(description = "Verifying if Count api is giving correct response ",groups={"api","regression","smoke"})
 	public void verifyCountAPIResponse() {
-		given()
-		.spec(requestSpecWithAuth(FD))
-		.when()
-		.get("/dashboard/count")
+		dashBoardService.count(FD)
 		.then()
 		.spec(responseSpec_OK())
 		
@@ -38,10 +48,7 @@ public class CountAPITest {
 	
 	@Test(description = "Verifying if Count api is giving correct status code for invalid token ",groups={"api","negative","regression","smoke"})
 	public void countAPITest_MissingAuthToken() {
-		given()
-		.spec(requestSpec())
-		.when()
-		.get("/dashboard/count")
+		dashBoardService.countWithNoAuth()
 		.then()
 		.spec(responseSpec_TEXT(401));
 		

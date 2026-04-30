@@ -24,11 +24,15 @@ import com.api.constant.Product;
 import com.api.constant.Role;
 import com.api.constant.Service_Location;
 import com.api.constant.Warrenty_Status;
-import com.api.pojo.CreateJobPayload;
-import com.api.pojo.Problems;
+
+//rt com.api.pojo.CreateJobPayload;
+//port com.api.pojo.Problems;
+import com.api.pojo.request.model.CreateJobPayload;
+import com.api.pojo.request.model.Problems;
 import com.api.pojo.request.model.Customer;
 import com.api.pojo.request.model.CustomerAddress;
 import com.api.pojo.request.model.CustomerProduct;
+import com.api.services.JobService;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
@@ -47,14 +51,15 @@ public class CreateJobAPIWithDBValidationTest {
 	private Customer customer;
 	private CustomerAddress customerAddress;
 	private	CustomerProduct customerProduct;
-	@BeforeMethod(description = "creating createjob api request payload")
+	private JobService jobService;
+	@BeforeMethod(description = "creating createjob api request payload and instantiating the jobservice")
 	public void setup() {
 		customer = new Customer("Abhi", "Bhagat", "7676767786", "", "abhi@gmail.com", "");
 
 		customerAddress = new CustomerAddress("A 12", "Abg c", "stghj t", "erhj t", "rtghj ee", "411056", "india",
 				"maharashtra");
-		customerProduct	 = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563553",
-				"18504753563553", "118504753563553", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
+		customerProduct	 = new CustomerProduct(getTimeWithDaysAgo(10), "18504753563333",
+				"18504753563333", "18504753563333", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(),
 				Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "battery issue");
 
@@ -63,13 +68,15 @@ public class CreateJobAPIWithDBValidationTest {
 		createJobPayload = new CreateJobPayload(Service_Location.SERVICE_LOCATION_A.getCode(),
 				Platform.FRONT_DESK.getCode(), Warrenty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer,
 				customerAddress, customerProduct, problemList);
+		 jobService = new JobService();
 
 	}
 
 	@Test(description = "Verifying if create api is giving correct response ", groups = { "api", "regression",
 			"smoke" })
 	public void createJobAPITest() throws SQLException {
-		Response response= given().spec(requestSpecWithAuth(Role.FD, createJobPayload)).when().post("/job/create").then()
+		Response response= jobService.createJob(Role.FD, createJobPayload)
+				.then()
 				.spec(responseSpec_OK())
 				.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
 				.body("message", equalTo("Job created successfully. "))
