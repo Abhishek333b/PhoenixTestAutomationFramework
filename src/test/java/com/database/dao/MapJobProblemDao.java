@@ -5,11 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.database.DatabaseManager;
 import com.database.model.MapJobProblemModel;
 
 public class MapJobProblemDao {
 
+	private static final Logger LOGGER = LogManager.getLogger(MapJobProblemDao.class);
 	private static final String PROBLEM_QUERY = """
 			select * FROM  map_job_problem WHERE tr_job_head_id =?;
 

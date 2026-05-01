@@ -17,6 +17,11 @@ public class UserBean {
 		
 	}
 	
+	public UserBean(String username,String password) {
+		this.username=username;
+		this.password=password;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserBean[username=" + username + ", password=" + password + "]";
@@ -38,10 +43,10 @@ public class UserBean {
 		this.password = password;
 	}
 
-	public UserBean(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}
+//	public UserBean(String username, String password) {
+//		super();
+//		this.username = username;
+//		this.password = password;
+//	}
 
 }

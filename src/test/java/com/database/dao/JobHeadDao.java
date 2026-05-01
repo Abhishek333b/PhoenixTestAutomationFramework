@@ -5,12 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.database.DatabaseManager;
 import com.database.model.JobHeadModel;
 import com.mysql.cj.xdevapi.PreparableStatement;
 
 public class JobHeadDao {
 
+	private static final Logger LOGGER = LogManager.getLogger(JobHeadDao.class);
 	private static final String JOB_HEAD_QUERY = """
 
 			select * from tr_job_head where tr_customer_id = ?;
@@ -37,6 +41,7 @@ public class JobHeadDao {
 
 		} catch (SQLException e) {
 
+			LOGGER.error("can not convert the Resultset to CustomerDBModel bean",e);
 			e.printStackTrace();
 		}
 		return jobHeadModel;
