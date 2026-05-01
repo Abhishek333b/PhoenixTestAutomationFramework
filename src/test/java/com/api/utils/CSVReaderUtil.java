@@ -21,7 +21,7 @@ public class CSVReaderUtil {
 	}
 
 	public static <T> Iterator<T> loadCSV(String pathofCSVFile,Class<T> bean) {
-		LOGGER.info("Loading the CSV file from path {}",pathofCSVFile)
+		LOGGER.info("Loading the CSV file from path {}",pathofCSVFile);
 		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(pathofCSVFile);
 		InputStreamReader isr = new InputStreamReader(is);
 		CSVReader csvReader = new CSVReader(isr);
