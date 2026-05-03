@@ -1,6 +1,7 @@
 package com.api.tests.datadriven;
 
 import static com.api.utils.SpecUtil.requestSpecWithAuth;
+
 import static com.api.utils.SpecUtil.responseSpec_OK;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -8,12 +9,16 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.constant.Role;
 //import com.api.pojo.CreateJobPayload;
 import com.api.pojo.request.model.CreateJobPayload;
 import com.api.services.JobService;
+//import com.api.tests.Listeners;
+
+@Listeners(com.listeners.APITestListener.class)
 public class CreateJobAPIExcelDataDrivenTest {
 	private JobService jobService;
 	@BeforeMethod(description = " instantiating the job service")

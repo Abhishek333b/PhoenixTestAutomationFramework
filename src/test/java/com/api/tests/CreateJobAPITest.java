@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.constant.Model;
@@ -29,7 +30,7 @@ import com.api.pojo.request.model.Problems;
 import com.api.services.JobService;
 
 
-
+@Listeners(com.listeners.APITestListener.class)
 
 public class CreateJobAPITest {
 	
