@@ -8,13 +8,17 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.constant.Role;
 //import com.api.pojo.CreateJobPayload;
 import com.api.pojo.request.model.CreateJobPayload;
 import com.api.services.JobService;
+//import com.api.tests.Listeners;
 
+
+@Listeners(com.listeners.APITestListener.class)
 public class CreateJobAPIJsonDataDrivenTest {
 	
 	private JobService jobService;
