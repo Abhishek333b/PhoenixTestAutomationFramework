@@ -6,10 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.database.DatabaseManager;
 import com.database.model.CustomerDBModel;
 
 public class CustomerDao {
+	private static final Logger LOGGER = LogManager.getLogger(CustomerDao.class);
 
 	private static final String CUSTOMER_DETAIL_QUERY = """
 
@@ -22,10 +26,12 @@ public class CustomerDao {
 	
 	public static CustomerDBModel getCustomerInfo(int customerId)  {
 		CustomerDBModel customerDBModel=null;
+		LOGGER.info("getting the connection from database manager");
 		try {
 		Connection conn = DatabaseManager.getConnection();
 		PreparedStatement preparedstatement = conn.prepareStatement(CUSTOMER_DETAIL_QUERY);
 		preparedstatement.setInt(1, customerId);
+		LOGGER.info("Executing the SQL Query",CUSTOMER_DETAIL_QUERY);
 		ResultSet resultSet = preparedstatement.executeQuery();
 		
 		while (resultSet.next()) {
@@ -46,7 +52,8 @@ public class CustomerDao {
 		}
 		}
 		catch (SQLException e) {
-			System.err.println(e.getMessage());
+			LOGGER.error("can not convert the Resultset to CustomerDBModel bean",e);
+			
 		}
 		return customerDBModel;
 

@@ -2,22 +2,28 @@ package com.api.utils;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import io.github.jopenlibs.vault.Vault;
 import io.github.jopenlibs.vault.VaultConfig;
 import io.github.jopenlibs.vault.VaultException;
 import io.github.jopenlibs.vault.response.LogicalResponse;
 
 public class VaultDBConfig {
-
+	
 	private static VaultConfig vaultConfig;
 	private static Vault vault;
+	private static final Logger LOGGER = LogManager.getLogger(VaultDBConfig.class);
+
 	static {
 
 		VaultConfig vaultConfig = null;
 		try {
 			vaultConfig = new VaultConfig().address(System.getenv("VAULT_SERVER")).token(System.getenv("VAULT_TOKEN")).build();
 		} catch (VaultException e) {
-			// TODO Auto-generated catch block
+			
+			LOGGER.error("Something went with valult config",e);
 			e.printStackTrace();
 		}
 
@@ -35,6 +41,7 @@ public class VaultDBConfig {
 		try {
 			response = vault.logical().read("secret/phoenix/qa/database");
 		} catch (VaultException e) {
+			LOGGER.error("Something went with valult response",e);
 			
 			e.printStackTrace();
 			return null;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.DataProvider;
 
 import com.api.pojo.request.model.CreateJobPayload;
@@ -14,14 +16,17 @@ import com.api.utils.ExcelReaderUtil;
 import com.api.utils.FakerDataGenerator;
 import com.api.utils.JsonReaderUtil;
 import com.database.dao.CreateJobPayloadDataDao;
+import com.database.dao.MapJobProblemDao;
 import com.dataproviders.api.bean.CreateJobBean;
 import com.dataproviders.api.bean.UserBean;
 
 public class DataProviderUtils {
+	private static final Logger LOGGER = LogManager.getLogger(DataProviderUtils.class);
 
 	@DataProvider(name = "LoginAPIDataProvider", parallel = true)
 
 	public static Iterator<UserBean> loginAPIDataProvider() {
+		LOGGER.info("Loading Data from CSV testData/LoginCreds.csv ");
 		return CSVReaderUtil.loadCSV("testData/LoginCreds.csv", UserBean.class);
 	}
 
@@ -53,8 +58,8 @@ public class DataProviderUtils {
 
 	@DataProvider(name = "LoginAPIJsonDataProvider", parallel = true)
 
-	public static Iterator<UserCredentials> LoginAPIJsonDataProvider() {
-		return JsonReaderUtil.loadJSON("testData/loginAPITestData.json", UserCredentials[].class);
+	public static Iterator<UserBean> LoginAPIJsonDataProvider() {
+		return JsonReaderUtil.loadJSON("testData/loginAPITestData.json", UserBean[].class);
 	}
 
 	@DataProvider(name = "CreateJobAPIJsonDataProvider", parallel = true)

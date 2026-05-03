@@ -5,10 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.database.DatabaseManager;
 import com.database.model.CustomerProductDBModel;
 
 public class CustomerProductDao {
+	private static final Logger LOGGER = LogManager.getLogger(CustomerProductDao.class);
 
 	private static final String PRODUCT_QUERY = """
 			Select * from tr_customer_product where id = ?

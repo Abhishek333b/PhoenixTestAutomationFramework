@@ -2,7 +2,12 @@ package com.api.services;
 
 import static com.api.utils.SpecUtil.requestSpec;
 import com.api.pojo.request.model.UserCredentials;
+import com.dataproviders.api.bean.UserBean;
+
 import static io.restassured.RestAssured.given;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
@@ -10,8 +15,11 @@ import io.restassured.response.Response;
 public class AuthService {
 
 	private static final String LOGIN_ENDPOINT="/login";
+	private static final Logger LOGGER = LogManager.getLogger(AuthService.class);
 	public Response login(Object userCredentials) {
 		
+		
+		LOGGER.info("making login request for payload {}",((UserBean)userCredentials).getUsername());
 		Response response=	given()
 		.spec(requestSpec(userCredentials))
 		.when()

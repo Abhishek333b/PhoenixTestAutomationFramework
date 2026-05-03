@@ -41,7 +41,7 @@ private JobService jobService;
          Customer customer = new Customer("Abhi", "Bhagat", "7676767786", "", "abhi@gmail.com", "");
 		
 		CustomerAddress customerAddress = new CustomerAddress("A 12", "Abg c", "stghj t", "erhj t", "rtghj ee", "411056", "india", "maharashtra");
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "29904753563333", "29904753563333", "29904753563333", getTimeWithDaysAgo(10), 
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "29904753567777", "29904753567777", "29904753567777", getTimeWithDaysAgo(10), 
 			Product.NEXUS_2.getCode(),Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "battery issue");
 		

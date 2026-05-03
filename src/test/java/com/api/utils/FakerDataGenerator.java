@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.api.pojo.request.model.CreateJobPayload;
 import com.api.pojo.request.model.Customer;
 import com.api.pojo.request.model.CustomerAddress;
@@ -26,12 +29,15 @@ public class FakerDataGenerator {
 	private final static int MST_MODEL_ID = 1;
 	private final static int ValidProvlemsId[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 19, 20, 22, 24,
 			26, 27, 28, 29 };
+	private static final Logger LOGGER = LogManager.getLogger(FakerDataGenerator.class);
 
 	private FakerDataGenerator() {
 
 	}
 
 	public static CreateJobPayload generateFakeCreateJobData() {
+		
+		LOGGER.info("Generating the ake payload for Create job");
 		Customer customer = generateFakeCustomerData();
 		CustomerAddress customerAddress = generateFakeCustomerAddressData();
 		CustomerProduct customerProduct = generateFakeCustomerProduct();
