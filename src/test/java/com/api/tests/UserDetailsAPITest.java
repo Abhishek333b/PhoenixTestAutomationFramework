@@ -1,20 +1,25 @@
 package com.api.tests;
 
 import static com.api.constant.Role.FD;
-import static io.restassured.RestAssured.given;
+import static com.api.utils.SpecUtil.responseSpec_OK;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 import java.io.IOException;
 
-import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.services.UserService;
 
-import static com.api.utils.SpecUtil.*;
-
-import static io.restassured.module.jsv.JsonSchemaValidator.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+@Epic("User Management")
+@Feature("User Details")
 @Listeners(com.listeners.APITestListener.class)
 public class UserDetailsAPITest {
 	private UserService userService;
@@ -25,8 +30,9 @@ public class UserDetailsAPITest {
 	}
 	
 	
-	
-	
+	@Story("UserDetails should be shown")
+	@Description("Verify if FD user is able login via api")
+	@Severity(SeverityLevel.CRITICAL)
 	@Test(description = "verify if the Userdetails API response is shown correctly", groups = { "api", "smoke",
 			"regression" })
 	public void userDetailsAPITest() throws IOException {
