@@ -29,8 +29,19 @@ import com.api.pojo.request.model.CustomerProduct;
 import com.api.pojo.request.model.Problems;
 import com.api.services.JobService;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+
 
 @Listeners(com.listeners.APITestListener.class)
+@Epic("Job Management")
+@Feature("Master API")
+
+
 
 public class CreateJobAPITest {
 	
@@ -53,7 +64,12 @@ private JobService jobService;
 		
 	}
 	
-	@Test(description = "Verifying if create api is giving correct response ",groups={"api","regression","smoke"})
+ 
+ 
+ 	@Story("FD should be able to create job")
+	@Description("Verifying if FD is able to use create job api and Inwarrenty job is created ")
+	@Severity(SeverityLevel.BLOCKER)
+	@Test(description = "Verifying if FD is able to use create job api and Inwarrenty job is created ",groups={"api","regression","smoke"})
 	public void createJobAPITest() {
 		jobService.createJob(Role.FD, createJobPayload)
 		.then()

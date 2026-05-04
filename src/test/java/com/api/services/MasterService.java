@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import com.api.constant.Role;
 import com.api.pojo.request.model.UserCredentials;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 public class MasterService {
@@ -16,6 +17,7 @@ public class MasterService {
 	private static final String MASTER_ENDPOINT  = "/master";
 	private static final Logger LOGGER = LogManager.getLogger(MasterService.class);
 
+	@Step("Making Master API request")
 	public Response master(Role role) {
 		LOGGER.info("making  request to {} for the role{}",MASTER_ENDPOINT,role);
 	return	given()

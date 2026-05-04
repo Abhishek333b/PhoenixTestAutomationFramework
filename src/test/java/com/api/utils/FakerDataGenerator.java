@@ -16,6 +16,8 @@ import com.api.pojo.request.model.CustomerProduct;
 import com.api.pojo.request.model.Problems;
 import com.github.javafaker.Faker;
 
+import io.qameta.allure.Step;
+
 public class FakerDataGenerator {
 //Util class
 	private static Faker faker = new Faker(new Locale("en-IND"));
@@ -34,6 +36,7 @@ public class FakerDataGenerator {
 	private FakerDataGenerator() {
 
 	}
+	@Step("Generating fake create job data")
 
 	public static CreateJobPayload generateFakeCreateJobData() {
 		
@@ -47,6 +50,7 @@ public class FakerDataGenerator {
 		return payload;
 	}
 
+	@Step("Generating multiple fake create job data with count")
 	public static Iterator<CreateJobPayload> generateFakeCreateJobData(int count) {
 		List<CreateJobPayload> payloadList = new ArrayList<CreateJobPayload>();
 		for (int i = 1; i <= count; i++) {
@@ -61,6 +65,7 @@ public class FakerDataGenerator {
 		return payloadList.iterator();
 	}
 
+	@Step("Generating multiple fake Problem list for Create job payload")
 	private static List<Problems> generateFakeProblemsList() {
 		int count = RANDOM.nextInt(3) + 1;
 		int randomIndex;
@@ -81,6 +86,7 @@ public class FakerDataGenerator {
 		return problemList;
 	}
 
+	@Step("Generating fake customer product info")
 	private static CustomerProduct generateFakeCustomerProduct() {
 		String dop = DateTimeUtil.getTimeWithDaysAgo(10);
 		String imeiSerialNumber = faker.numerify("###############");
@@ -90,6 +96,7 @@ public class FakerDataGenerator {
 		return customerProduct;
 	}
 
+	@Step("Generating fake customer address info")
 	private static CustomerAddress generateFakeCustomerAddressData() {
 		String flatNumber = faker.numerify("###");
 		String apartmentName = faker.address().streetName();
@@ -104,7 +111,7 @@ public class FakerDataGenerator {
 		return customerAddress;
 
 	}
-
+	@Step("Generating fake customer data info")
 	private static Customer generateFakeCustomerData() {
 		String fname = faker.name().firstName();
 		String lname = faker.name().lastName();

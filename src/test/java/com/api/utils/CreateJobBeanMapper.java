@@ -12,6 +12,9 @@ import com.api.pojo.request.model.Customer;
 import com.api.pojo.request.model.CustomerAddress;
 import com.api.pojo.request.model.CustomerProduct;
 import com.dataproviders.api.bean.CreateJobBean;
+
+import io.qameta.allure.Step;
+
 import com.api.pojo.request.model.CreateJobPayload;
 import com.api.pojo.request.model.Problems;
 
@@ -25,6 +28,7 @@ private CreateJobBeanMapper() {
 private static String safeString(String value) {
     return value != null ? value : "";
 }
+	@Step("Converting the CreateJobBean to the CreateJob Payload for CreateJobAPI test")
 	public static CreateJobPayload mapper(CreateJobBean bean) {
 		LOGGER.info("Converting the create job bean {} to CreateJobPayload",bean);
 		

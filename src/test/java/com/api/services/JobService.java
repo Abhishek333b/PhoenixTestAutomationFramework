@@ -11,6 +11,7 @@ import com.api.constant.Role;
 import com.api.pojo.request.model.CreateJobPayload;
 import com.api.utils.SpecUtil;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 public class JobService {
@@ -19,6 +20,7 @@ public class JobService {
 	private static final String SEARCH_ENDPOINT="/job/search";
 	private static final Logger LOGGER = LogManager.getLogger(JobService.class);
 	
+	@Step("Creating Inwarranty Job with Create Job API")
 	public Response createJob(Role role,CreateJobPayload creatJobPayload) {
 		LOGGER.info("Making request to {} with role {} and payload {}",CREATE_JOB_ENDPOINT,role, creatJobPayload);
 	return	given()
@@ -27,6 +29,8 @@ public class JobService {
 		.post(CREATE_JOB_ENDPOINT);
 	}
 
+	
+	@Step("Making search API request")
 	public Response search(Role role,Object payload) {
 		LOGGER.info("Making request to {} with role {} and payload {}",SEARCH_ENDPOINT,role,payload);
 		

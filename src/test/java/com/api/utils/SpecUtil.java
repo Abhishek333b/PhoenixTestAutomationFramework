@@ -8,6 +8,8 @@ import com.api.constant.Role;
 import com.api.filters.SensitiveDataFilter;
 import com.api.pojo.UserCredentials;
 
+import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -16,59 +18,76 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 public class SpecUtil {
+	@Step("Setting up BaseURI,Content type as Application/JSON and attaching the sensitiveData filter")
 
 	public static RequestSpecification requestSpec() {
 
 		RequestSpecification request = new RequestSpecBuilder().setBaseUri(getProperty("BASE_URI"))
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON)
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return request;
 	}
 
 	// post put patch
+	@Step("Setting up BaseURI,Content type as Application/JSON and attaching the sensitiveData filter")
+
 	public static RequestSpecification requestSpec(Object payload) {
 
 		RequestSpecification requestSpecification = new RequestSpecBuilder().setBaseUri(getProperty("BASE_URI"))
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON).setBody(payload)
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return requestSpecification;
 
 	}
+
+	@Step("Setting up BaseURI,Content type as Application/JSON and attaching the sensitiveData filter for role")
 
 	public static RequestSpecification requestSpecWithAuth(Role role) {
 		RequestSpecification requestSpecification = new RequestSpecBuilder().setBaseUri(getProperty("BASE_URI"))
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON)
 				.addHeader("Authorization", AuthTokenProvider.getToken(role))
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return requestSpecification;
 
 	}
+
+	@Step("Setting up BaseURI,Content type as Application/JSON and attaching the sensitiveData filter and attaching payload")
 
 	public static RequestSpecification requestSpecWithAuth(Role role, Object payload) {
 		RequestSpecification requestSpecification = new RequestSpecBuilder().setBaseUri(getProperty("BASE_URI"))
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON)
 				.addHeader("Authorization", AuthTokenProvider.getToken(role)).setBody(payload)
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return requestSpecification;
 
 	}
 
+	@Step("Expecting the response to have content type as Application/JSON,Status 200 and response time less than 2000ms")
+
 	public static ResponseSpecification responseSpec_OK() {
 		ResponseSpecification responseSpecification = new ResponseSpecBuilder().expectContentType(ContentType.JSON)
-				.expectStatusCode(200).expectResponseTime(Matchers.lessThan(2000L)).build();
+				.expectStatusCode(200).expectResponseTime(Matchers.lessThan(2000L))
+				
+				.build();
 		return responseSpecification;
 	}
 
+	@Step("Expecting the response to have content type as Application/JSON, and response time less than 2000ms and status code")
 	public static ResponseSpecification responseSpec_JSON(int statusCode) {
 		ResponseSpecification responseSpecification = new ResponseSpecBuilder().expectContentType(ContentType.JSON)
 				.expectStatusCode(statusCode).expectResponseTime(Matchers.lessThan(2000L)).build();
 		return responseSpecification;
 	}
 
+	@Step("Expecting the response to have content type as Text, and response time less than 2000ms and status code")
 	public static ResponseSpecification responseSpec_TEXT(int statusCode) {
 		ResponseSpecification responseSpecification = new ResponseSpecBuilder()
 

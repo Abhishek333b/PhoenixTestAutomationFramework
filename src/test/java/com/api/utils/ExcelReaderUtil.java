@@ -15,6 +15,8 @@ import com.api.pojo.request.model.UserCredentials;
 import com.dataproviders.api.bean.UserBean;
 import com.poiji.bind.Poiji;
 
+import io.qameta.allure.Step;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -25,6 +27,7 @@ public class ExcelReaderUtil {
 	private ExcelReaderUtil() {
 
 	}
+	@Step("Loading test data from excel file")
 
 	public static <T> Iterator<T> loadTestData(String sheetName,Class<T> clazz)  {
 		LOGGER.info("Reading the test data form  sheet name is {}",sheetName);
