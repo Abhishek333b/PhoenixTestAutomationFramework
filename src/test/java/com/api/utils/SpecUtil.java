@@ -9,6 +9,7 @@ import com.api.filters.SensitiveDataFilter;
 import com.api.pojo.UserCredentials;
 
 import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -24,6 +25,7 @@ public class SpecUtil {
 		RequestSpecification request = new RequestSpecBuilder().setBaseUri(getProperty("BASE_URI"))
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON)
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return request;
 	}
@@ -36,6 +38,7 @@ public class SpecUtil {
 		RequestSpecification requestSpecification = new RequestSpecBuilder().setBaseUri(getProperty("BASE_URI"))
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON).setBody(payload)
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return requestSpecification;
 
@@ -48,6 +51,7 @@ public class SpecUtil {
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON)
 				.addHeader("Authorization", AuthTokenProvider.getToken(role))
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return requestSpecification;
 
@@ -60,6 +64,7 @@ public class SpecUtil {
 				.setContentType(ContentType.JSON).setAccept(ContentType.JSON)
 				.addHeader("Authorization", AuthTokenProvider.getToken(role)).setBody(payload)
 				.addFilter(new SensitiveDataFilter())
+				.addFilter(new AllureRestAssured())
 				.build();
 		return requestSpecification;
 
@@ -69,7 +74,9 @@ public class SpecUtil {
 
 	public static ResponseSpecification responseSpec_OK() {
 		ResponseSpecification responseSpecification = new ResponseSpecBuilder().expectContentType(ContentType.JSON)
-				.expectStatusCode(200).expectResponseTime(Matchers.lessThan(2000L)).build();
+				.expectStatusCode(200).expectResponseTime(Matchers.lessThan(2000L))
+				
+				.build();
 		return responseSpecification;
 	}
 
