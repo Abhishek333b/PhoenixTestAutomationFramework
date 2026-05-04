@@ -17,6 +17,7 @@ import com.api.constant.Role;
 import com.api.pojo.UserCredentials;
 import com.api.services.AuthService;
 
+import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 
 public class AuthTokenProvider {
@@ -27,6 +28,7 @@ public class AuthTokenProvider {
 		
 	}
 
+	@Step("Getting the Authtoken for role")
 	public static String getToken(Role role) {
 		
 		LOGGER.info("Checking if the token for {} is present in cache",role);
